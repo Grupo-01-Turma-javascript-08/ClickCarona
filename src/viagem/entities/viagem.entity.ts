@@ -29,7 +29,7 @@ export class Viagem {
     tempoViagem: number;
 
     @Column()
-    tipo: string;
+    tipoPagamento: string;
 
     @ManyToOne(() => Usuario, (usuario) => usuario.viagens, { onDelete: 'CASCADE' })
 
