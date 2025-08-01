@@ -24,4 +24,5 @@ export class Usuario {
 
     @OneToMany(() => Viagem, (viagem) => viagem.usuario)
     viagens: Viagem[];
+    viagem: any;
 }
