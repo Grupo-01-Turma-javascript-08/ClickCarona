@@ -7,59 +7,52 @@ import { Viagem } from "../entities/viagem.entity";
 export class ViagemService {
     constructor(
         @InjectRepository(Viagem)
-        private viagemRepository: Repository<Tema>
+        private viagemRepository: Repository<Viagem>
     ) { }
 
-    async findAll(): Promise<Tema[]> {
-        return await this.temaRepository.find({
-            relations: {
-                postagem: true
-            }
-        });
+    async findAll(): Promise<Viagem[]> {
+        return await this.viagemRepository.find();
     }
 
-    async findById(id: number): Promise<Tema> {
-        let tema = await this.temaRepository.findOne({
+    async findById(id: number): Promise<Viagem> {
+        let viagem = await this.viagemRepository.findOne({
             where: {
                 id
             },
-            relations: {
-                postagem: true
-            }
         });
 
-        if (!tema)
-            throw new HttpException('Tema não encontrado!', HttpStatus.NOT_FOUND);
+        if (!viagem)
+            throw new HttpException('Viagem não achada!', HttpStatus.NOT_FOUND);
 
-        return tema;
+        return viagem;
     }
-    async findAllByDescricao(descricao: string): Promise<Tema[]> {
-        return await this.temaRepository.find({
+    async findAllByEnderecoEmbarque(enderecoEmbarque: string): Promise<Viagem[]> {
+        return await this.viagemRepository.find({
             where: {
-                descricao: ILike(`%${descricao}%`)
+                enderecoEmbarque: ILike(`%${enderecoEmbarque}%`)
             },
             relations: {
-                postagem: true
+                usuario: true
             }
         })
     }
 
-    async create(Tema: Tema): Promise<Tema> {
-        return await this.temaRepository.save(Tema);
+    async create(Viagem: Viagem): Promise<Viagem> {
+        return await this.viagemRepository.save(Viagem);
     }
 
-    async update(tema: Tema): Promise<Tema> {
+    async update(viagem: Viagem): Promise<Viagem> {
 
-        await this.findById(tema.id)
+        await this.findById(viagem.id)
 
-        return await this.temaRepository.save(tema);
+        return await this.viagemRepository.save(viagem);
     }
 
     async delete(id: number): Promise<DeleteResult> {
 
         await this.findById(id)
 
-        return await this.temaRepository.delete(id)
+        return await this.viagemRepository.delete(id)
     }
 
 }
