@@ -18,10 +18,10 @@ export class ViagemController {
         return this.viagemService.findById(id);
     }
 
-    @Get('/descricao/:descricao')
+    @Get('/enderecoembarque/:enderecoEmbarque')
     @HttpCode(HttpStatus.OK)
-    findAllByDescricao(@Param('descricao') descricao: string): Promise<Viagem[]> {
-        return this.viagemService.findAllByDescricao(descricao);
+    findAllByEnderecoEmbarque(@Param('enderecoEmbarque') enderecoEmbarque: string): Promise<Viagem[]> {
+        return this.viagemService.findAllByEnderecoEmbarque(enderecoEmbarque);
     }
 
     @Post()
