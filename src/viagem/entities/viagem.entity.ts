@@ -8,28 +8,16 @@ export class Viagem {
     id: number;
 
     @Column()
-    motorista: string;
-
-    @Column()
-    modeloCarro: string;
-
-    @Column()
     enderecoEmbarque: string;
 
     @Column()
     enderecoDesembarque: string;
 
-    @Column('decimal', { precision: 10, scale: 2 })
-    valorPorMinuto: number;
-
-    @Column('decimal', { precision: 10, scale: 2 })
-    valorPorKm: number;
-
     @Column()
     tempoViagem: number;
 
     @Column()
-    tipoPagamento: string;
+    distanciaViagem: number;
 
     @ManyToOne(() => Usuario, (usuario) => usuario.viagens, { onDelete: 'CASCADE' })
 

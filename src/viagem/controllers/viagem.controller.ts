@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put } from "@nestjs/common";
 import { Viagem } from "../entities/viagem.entity";
-import { ViagemService } from "../services/viagem.service";
+import { TempoViagemType, ViagemService } from "../services/viagem.service";
 
 @Controller('/viagens')
 export class ViagemController {
@@ -22,6 +22,13 @@ export class ViagemController {
     @HttpCode(HttpStatus.OK)
     findAllByEnderecoEmbarque(@Param('enderecoEmbarque') enderecoEmbarque: string): Promise<Viagem[]> {
         return this.viagemService.findAllByEnderecoEmbarque(enderecoEmbarque);
+    }
+
+    @Get('/calculoTempoViagem/:id/:velocidade')
+    @HttpCode(HttpStatus.OK)
+    calculoTempoViagem(@Param('id') id: string, @Param('velocidade') velocidade: string,
+    ): Promise<TempoViagemType> {
+        return this.viagemService.calculoTempoViagem(Number(id), Number(velocidade));
     }
 
     @Post()
