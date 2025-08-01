@@ -21,7 +21,7 @@ export class UsuarioController {
     @Get('/nome/:nome')
     @HttpCode(HttpStatus.OK)
     findAllBynome(@Param('nome') nome: string): Promise<Usuario[]> {
-        return this.usuarioService.findAllByNome(nome);
+        return this.usuarioService.findAllByName(nome);
     }
 
     @Post()
@@ -32,13 +32,13 @@ export class UsuarioController {
 
     @Put()
     @HttpCode(HttpStatus.OK)
-    update(@Body() postagem: Postagem): Promise<Postagem> {
-        return this.postagemService.update(postagem);
+    update(@Body() usuario: Usuario): Promise<Usuario> {
+        return this.usuarioService.update(usuario);
     }
 
     @Delete()
     @HttpCode(HttpStatus.NO_CONTENT)
     delete(@Param('id', ParseIntPipe) id: number) {
-        return this.postagemService.delete(id);
+        return this.usuarioService.delete(id);
     }
 }

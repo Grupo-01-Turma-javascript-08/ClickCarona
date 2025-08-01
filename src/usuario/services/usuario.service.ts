@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, ILike, Repository } from "typeorm";
 import { Usuario } from "../entities/usuario.entity";
+import { ViagemService } from "../../viagem/services/viagem.service";
 
 @Injectable()
 export class UsuarioService {
@@ -13,61 +14,55 @@ export class UsuarioService {
 
     async findAll(): Promise<Usuario[]> {
         return await this.usuarioRepository.find({
-            relations: {
-                viagem: true
-            }
+           relations: ['viagens'],
         });
     }
 
     async findById(id: number): Promise<Usuario> {
 
-        let Usuario = await this.usuarioRepository.findOne({
+        const usuario = await this.usuarioRepository.findOne({
             where: {
                 id
             },
-            relations: {
-                viagem: true
-            }
+           relations: ['viagens'],
         });
 
-        if (!Usuario)
+        if (!usuario)
             throw new HttpException('usuário não encontrada!', HttpStatus.NOT_FOUND);
 
         return usuario;
     }
 
-    async findAllByTitulo(titulo: string): Promise<Usuario[]> {
+    async findAllByName(nome: string): Promise<Usuario[]> {
         return await this.usuarioRepository.find({
             where: {
-                titulo: ILike(`%${titulo}%`)
+                nome: ILike(`%${nome}%`)
             },
-            relations: {
-                viagem: true
-            }
+            relations: ['viagens'],
         })
     }
 
-    async create(usuario: UsuarioService): Promise<usuario> {
+    async create(usuario: Usuario): Promise<Usuario> {
 
-        await this.viagemService.findById(usuario.viagem.id);
+        
 
         return await this.usuarioRepository.save(usuario);
     }
 
     async update(usuario: Usuario): Promise<Usuario> {
 
-        await this.findById(Usuario.id);
+        await this.findById(usuario.id);
 
-        await this.viagemService.findById(usuario.viagem.id);
+        await this.viagemService.findById(usuario.id);
 
-        return await this.postagemRepository.save(postagem);
+        return await this.usuarioRepository.save(usuario);
     }
 
     async delete(id: number): Promise<DeleteResult> {
 
         await this.findById(id);
 
-        return await this.postagemRepository.delete(id);
+        return await this.usuarioRepository.delete(id);
 
     }
 
