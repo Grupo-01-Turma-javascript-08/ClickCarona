@@ -28,7 +28,7 @@ export class UsuarioService {
         });
 
         if (!usuario)
-            throw new HttpException('usuário não encontrada!', HttpStatus.NOT_FOUND);
+            throw new HttpException('usuário não encontrado!', HttpStatus.NOT_FOUND);
 
         return usuario;
     }

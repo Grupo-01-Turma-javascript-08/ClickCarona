@@ -12,6 +12,8 @@ export class ViagemController {
         return this.viagemService.findAll();
     }
 
+
+    @Get('/calculoTempoViagem')
     calculoTempoViagem(
         @Query('id', ParseIntPipe) id: number,
         @Query('velocidade', ParseIntPipe) velocidade: number,

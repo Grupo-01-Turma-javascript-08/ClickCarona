@@ -36,7 +36,7 @@ export class UsuarioController {
         return this.usuarioService.update(usuario);
     }
 
-    @Delete()
+    @Delete("/:id")
     @HttpCode(HttpStatus.NO_CONTENT)
     delete(@Param('id', ParseIntPipe) id: number) {
         return this.usuarioService.delete(id);
